@@ -35,18 +35,18 @@ class Editor extends Component {
     this.channel = this.pusher.subscribe("editor");
   }
 
-  handleLang(event){
-      this.setState({
-          lang: event.target.value
-      });
+  handleLang(event) {
+    this.setState({
+      lang: event.target.value
+    });
   }
-  checkLang(value){
-      if(value===this.state.lang){
-        return true;
-      }
-      else{
-        return false;
-      }
+  checkLang(value) {
+    if (value === this.state.lang) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
   componentDidUpdate() {
@@ -122,20 +122,21 @@ class Editor extends Component {
     return (
       <div className="App">
         <section className="playground">
-            <div className="editor-file-explorer">
-                <label>File Explorer: 
-                    <select
-                        value={this.state.lang}
-                        onChange={this.handleLang}>
-                            <option value="HTML">HTML</option>
-                            <option value="CSS">CSS</option>
-                            <option value="JavaScript">JavaScript</option>
-                    </select>                    
-                </label>
-            </div>
-          <div className="code-editor html-code" style={this.checkLang("HTML")?null:{display: 'none'}} >
+          <div className="editor-file-explorer">
+            <label>File Explorer:
+              <select
+                value={this.state.lang}
+                onChange={this.handleLang}>
+                <option value="HTML">HTML</option>
+                <option value="CSS">CSS</option>
+                <option value="JavaScript">JavaScript</option>
+              </select>
+            </label>
+          </div>
+          <div className="code-editor html-code" style={this.checkLang("HTML") ? null : { display: 'none' }} >
             <div className="editor-header">HTML</div>
             <CodeMirror
+              className="CodeMirror"
               value={html}
               options={{
                 mode: "htmlmixed",
@@ -146,7 +147,7 @@ class Editor extends Component {
               }}
             />
           </div>
-          <div className="code-editor css-code" style={this.checkLang("CSS")?null:{display: 'none'}}>
+          <div className="code-editor css-code" style={this.checkLang("CSS") ? null : { display: 'none' }}>
             <div className="editor-header">CSS</div>
             <CodeMirror
               value={css}
@@ -159,7 +160,7 @@ class Editor extends Component {
               }}
             />
           </div>
-          <div className="code-editor js-code" style={this.checkLang("JavaScript")?null:{display: 'none'}}>
+          <div className="code-editor js-code" style={this.checkLang("JavaScript") ? null : { display: 'none' }}>
             <div className="editor-header">JavaScript</div>
             <CodeMirror
               value={js}

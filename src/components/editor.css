@@ -18,24 +18,28 @@ html {
   }
   
   .code-editor {
-    height: 33.33%;
+    height: 90%;
     overflow: hidden;
     position: relative;
   }
   
   .editor-header {
-    height: 30px;
+    height: fit-content;
     content: attr(title);
     display: flex;
     align-items: center;
-    padding-left: 20px;
+    padding: 20px;
     font-size: 18px;
     color: #fafafa;
   }
   
   .react-codemirror2 {
-    max-height: calc(100% - 30px);
+    height: 100%;
     overflow: auto;
+  }
+
+  .CodeMirror {
+    height:100% !important
   }
   
   .result {
