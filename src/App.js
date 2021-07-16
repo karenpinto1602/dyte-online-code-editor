@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Controlled as CodeMirror } from "react-codemirror2";
 import Pusher from "pusher-js";
-import pushid from "pushid";
+/* import pushid from "pushid"; */
 import axios from "axios";
 
 import "./App.css";
