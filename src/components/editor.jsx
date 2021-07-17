@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { Controlled as CodeMirror } from "react-codemirror2";
 import Pusher from "pusher-js";
 import pushid from "pushid";
-import axios from "axios";
+/* import axios from "axios"; */
+/* import express from "express";
+import cors from "cors"; */
 
 import "./editor.css";
 import "codemirror/lib/codemirror.css";
@@ -71,28 +73,46 @@ class Editor extends Component {
   }
 
   syncUpdates = () => {
-    const data = { ...this.state };
+    /* const data = { ...this.state }; */
 
-    axios
+    /* axios
       .post("http://localhost:5000", data)
-      .catch(console.error);
+      .catch(console.error); */
   };
 
   /* Pastebin start Developer */
   saveCode() {
-    /* console.log("Save funct called");
+    /* var express = require('express');
+    var app = express();
+    var cors = require('cors');
+    //var fs = require('fs');
+    app.use(cors()); */
+    console.log("Save funct called");
+
     var request = new XMLHttpRequest();
+
     console.log(request);
     request.open("POST", "https://pastebin.com/api/api_post.php", true);
-    //request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    request.send("api_dev_key=P6pexxhBcg0FhTro-sMy6mFJNzYWceZE&api_option=paste&api_paste_private=0&api_paste_expire_date=10M&api_paste_format=javascript&api_paste_code=hello"); */
+    request.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+    request.send("api_dev_key=P6pexxhBcg0FhTro-sMy6mFJNzYWceZE&api_option=paste&api_paste_private=0&api_paste_expire_date=10M&api_paste_format=javascript&api_paste_code=hello");
 
-    //Using Axios
-    const url = "https://pastebin.com/api/api_post.php";
-    axios.post(url, "api_dev_key=P6pexxhBcg0FhTro-sMy6mFJNzYWceZE&api_option=paste&api_paste_private=0&api_paste_expire_date=10M&api_paste_format=javascript&api_paste_code=hello")
-      .then(res => {
-        console.log("Success Axios");
-      })
+
+
+    /*  var PastebinAPI = require('pastebin-js');
+     var pastebin = new PastebinAPI({
+       'api_dev_key': 'P6pexxhBcg0FhTro-sMy6mFJNzYWceZE',
+       'api_user_name': 'karenpinto1602',
+       'api_user_password': 'Pastebin@123'
+     });
+     pastebin
+       .createPaste("heuooo", "pastebin-js test", null, 0, "1H")
+       .then(function (d) {
+         console.log("Data: " + d); //stores the id
+       })
+       .catch(function (err) {
+         console.log("Error: " + err);
+       })
+  */
 
   }
   /* Pastebin End Developer */
