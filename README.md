@@ -2,10 +2,6 @@
 
     https://nifty-bartik-acc44b.netlify.app
 
-### Hosted on Heroku
-
-    https://kp-code-editor.herokuapp.com
-
 ### Website on Github pages
 
     https://karenpinto1602.github.io/dyte-online-code-editor
