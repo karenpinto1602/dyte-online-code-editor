@@ -5,6 +5,7 @@ import Pusher from "pusher-js";
 import pushid from "pushid";
 import Toggle from 'react-toggle';
 import 'react-toggle/style.css';
+import axios from 'axios';
 
 /* Icons from Material-ui */
 import { Brightness5, NightsStay } from '@material-ui/icons';
@@ -83,26 +84,24 @@ class Editor extends Component {
     });
   }
 
+  syncUpdates = () => {
+    const data = { ...this.state };
+    axios
+      .post("http://localhost:5000", data)
+      .catch(console.error);
+  };
+
   /* Pastebin start Developer */
   saveCode() {
-    /* var express = require('express');
-    var app = express();
-    var cors = require('cors');
-    //var fs = require('fs');
-    app.use(cors()); */
     console.log("Save funct called");
-
     var request = new XMLHttpRequest();
-
     console.log(request);
     request.open("POST", "https://pastebin.com/api/api_post.php", true);
     request.setRequestHeader("content-type", "application/x-www-form-urlencoded");
     request.send("api_dev_key=P6pexxhBcg0FhTro-sMy6mFJNzYWceZE&api_option=paste&api_paste_private=0&api_paste_expire_date=10M&api_paste_format=javascript&api_paste_code=hello");
 
-
-
     /*  var PastebinAPI = require('pastebin-js');
-     var pastebin = new PastebinAPI({
+        var pastebin = new PastebinAPI({
        'api_dev_key': 'P6pexxhBcg0FhTro-sMy6mFJNzYWceZE',
        'api_user_name': 'karenpinto1602',
        'api_user_password': 'Pastebin@123'
@@ -116,9 +115,7 @@ class Editor extends Component {
          console.log("Error: " + err);
        })
   */
-
   }
-  /* Pastebin End Developer */
 
   /* Live Code Updated here */
   liveCode = () => {
@@ -235,7 +232,7 @@ class Editor extends Component {
                 ...styleSetCodeMirror
               }}
               onBeforeChange={(editor, data, html) => {
-                this.setState({ html });
+                this.setState({ html }, () => this.syncUpdates());
               }}
             />
           </div>
@@ -250,7 +247,7 @@ class Editor extends Component {
                 ...styleSetCodeMirror
               }}
               onBeforeChange={(editor, data, css) => {
-                this.setState({ css });
+                this.setState({ css }, () => this.syncUpdates());
               }}
             />
           </div>
@@ -265,7 +262,7 @@ class Editor extends Component {
                 ...styleSetCodeMirror
               }}
               onBeforeChange={(editor, data, js) => {
-                this.setState({ js });
+                this.setState({ js }, () => this.syncUpdates());
               }}
             />
           </div>

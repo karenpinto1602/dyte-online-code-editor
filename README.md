@@ -2,6 +2,10 @@
 
     https://kp-code-editor.herokuapp.com
 
+### Hosted on Netlify
+
+    https://nifty-bartik-acc44b.netlify.app
+
 
 
 
