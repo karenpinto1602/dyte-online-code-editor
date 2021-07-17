@@ -5,7 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.12.1",
     "@material-ui/icons": "^4.11.2",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "codemirror": "^5.42.2",
     "cors": "^2.8.5",
     "pastebin-js": "^1.0.6",
