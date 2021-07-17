@@ -6,13 +6,17 @@
 
     https://nifty-bartik-acc44b.netlify.app
 
+### Website on Github pages
 
+    https://karenpinto1602.github.io/dyte-online-code-editor
 
 
 To Run the Project locally
 
  git clone https://github.com/karenpinto1602/dyte-online-code-editor.git
+ 
  cd dyte-online-code-editor
+ 
  git checkout main
 
 In the project directory, install node modules
