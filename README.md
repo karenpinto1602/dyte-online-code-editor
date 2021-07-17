@@ -11,8 +11,8 @@
 
 To Run the Project locally
 
- git clone https://github.com/karenpinto1602/dyte-react-kp.git
- cd dyte-react-kp
+ git clone https://github.com/karenpinto1602/dyte-online-code-editor.git
+ cd dyte-online-code-editor
  git checkout main
 
 In the project directory, install node modules
