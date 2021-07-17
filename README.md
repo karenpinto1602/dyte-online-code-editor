@@ -1,13 +1,13 @@
 Hosted on Heroku
 
-### `https://kp-code-editor.herokuapp.com/`
+    https://kp-code-editor.herokuapp.com/
 
 
 To Run the Project locally
 
-### `git clone https://github.com/karenpinto1602/dyte-react-kp.git`
-### `cd dyte-react-kp`
-### `git checkout main`
+### git clone https://github.com/karenpinto1602/dyte-react-kp.git
+### cd dyte-react-kp
+### git checkout main
 
 In the project directory, install node modules
 
