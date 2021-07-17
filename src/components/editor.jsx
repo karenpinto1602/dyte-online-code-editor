@@ -12,7 +12,6 @@ import "codemirror/mode/htmlmixed/htmlmixed";
 import "codemirror/mode/css/css";
 import "codemirror/mode/javascript/javascript";
 
-import Select from 'react-select';
 
 class Editor extends Component {
   constructor() {
@@ -77,6 +76,9 @@ class Editor extends Component {
       .post("http://localhost:5000", data)
       .catch(console.error);
   };
+
+  /* Pastebin start Developer */
+  /* Pastebin End Developer */
 
   runCode = () => {
     const { html, css, js } = this.state;
