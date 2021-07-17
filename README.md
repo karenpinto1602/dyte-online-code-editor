@@ -41,7 +41,7 @@ You will also see any lint errors in the console.
 
 ### Additional Features
 
-1. Toggle button to swtich between dark and bright mode
+1. Toggle button to switch between dark and bright mode
 2. Download Code with Extension .html
-3. Resposive
+3. Responsive
 
