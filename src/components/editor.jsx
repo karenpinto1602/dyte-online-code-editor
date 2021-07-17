@@ -26,6 +26,7 @@ class Editor extends Component {
 
     this.handleLang = this.handleLang.bind(this);
     this.checkLang = this.checkLang.bind(this);
+    this.saveCode = this.saveCode.bind(this);
 
     this.pusher = new Pusher("ee9caf5c6e760f9f1595", {
       cluster: "ap2",
@@ -78,6 +79,22 @@ class Editor extends Component {
   };
 
   /* Pastebin start Developer */
+  saveCode() {
+    /* console.log("Save funct called");
+    var request = new XMLHttpRequest();
+    console.log(request);
+    request.open("POST", "https://pastebin.com/api/api_post.php", true);
+    //request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    request.send("api_dev_key=P6pexxhBcg0FhTro-sMy6mFJNzYWceZE&api_option=paste&api_paste_private=0&api_paste_expire_date=10M&api_paste_format=javascript&api_paste_code=hello"); */
+
+    //Using Axios
+    const url = "https://pastebin.com/api/api_post.php";
+    axios.post(url, "api_dev_key=P6pexxhBcg0FhTro-sMy6mFJNzYWceZE&api_option=paste&api_paste_private=0&api_paste_expire_date=10M&api_paste_format=javascript&api_paste_code=hello")
+      .then(res => {
+        console.log("Success Axios");
+      })
+
+  }
   /* Pastebin End Developer */
 
   runCode = () => {
@@ -134,6 +151,9 @@ class Editor extends Component {
                 <option value="JavaScript">JavaScript</option>
               </select>
             </label>
+          </div>
+          <div className="editor-save-code" onClick={() => this.saveCode()}>
+            <button>SAVE CODE</button>
           </div>
           <div className="code-editor html-code" style={this.checkLang("HTML") ? null : { display: 'none' }} >
             <div className="editor-header">HTML</div>
