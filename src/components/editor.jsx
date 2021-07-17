@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Controlled as CodeMirror } from "react-codemirror2";
 import Pusher from "pusher-js";
 import pushid from "pushid";
+import Toggle from 'react-toggle';
+import 'react-toggle/style.css';
+import { Brightness5, NightsStay } from '@material-ui/icons';
 /* import axios from "axios"; */
 /* import express from "express";
 import cors from "cors"; */
@@ -9,6 +12,7 @@ import cors from "cors"; */
 import "./editor.css";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material.css";
+import "codemirror/theme/3024-day.css";
 
 import "codemirror/mode/htmlmixed/htmlmixed";
 import "codemirror/mode/css/css";
@@ -23,7 +27,8 @@ class Editor extends Component {
       html: "",
       css: "",
       js: "",
-      lang: 'HTML'
+      lang: 'HTML',
+      push: true
     };
 
     this.handleLang = this.handleLang.bind(this);
@@ -36,6 +41,8 @@ class Editor extends Component {
     });
     this.channel = this.pusher.subscribe("editor");
   }
+
+
 
   handleLang(event) {
     this.setState({
@@ -152,17 +159,20 @@ class Editor extends Component {
   render() {
     const { html, js, css } = this.state;
     const codeMirrorOptions = {
-      theme: "material",
+      theme: this.state.push ? "material" : "3024-day",
       lineNumbers: true,
       scrollbarStyle: null,
-      lineWrapping: true
+      lineWrapping: true,
+
     };
 
     return (
-      <div className="App">
-        <section className="playground">
-          <div className="editor-file-explorer">
-            <label>File Explorer:
+      <div className="editor-body">
+        <div className="editor-code" style={this.state.push ? { backgroundColor: '#1E1E2C' } : { backgroundColor: 'aliceblue' }}>
+
+          <div className="editor-file-explorer" style={this.state.push ? { color: 'white' } : { color: 'black' }}>
+            <div>
+              <label>File Explorer: </label>
               <select
                 value={this.state.lang}
                 onChange={this.handleLang}>
@@ -170,13 +180,26 @@ class Editor extends Component {
                 <option value="CSS">CSS</option>
                 <option value="JavaScript">JavaScript</option>
               </select>
-            </label>
+
+            </div>
+            <div className="editor-file-explorer-toggle">
+              <label> Theme
+                {
+                  this.state.push ?
+                    <Toggle defaultChecked={false} icons={{ unchecked: <Brightness5 style={{ fontSize: '16px', color: 'yellow', margin: '-3px 0 0 -1px' }} /> }} className="settings-symbol" onClick={() => this.setState({ push: !this.state.push })} />
+                    :
+                    <Toggle defaultChecked={true} icons={{ checked: <NightsStay style={{ fontSize: '16px', color: 'black', margin: '-3px -1px 0 0' }} /> }} className="settings-symbol" onClick={() => this.setState({ push: !this.state.push })} />
+                }
+              </label>
+            </div>
           </div>
-          <div className="editor-save-code" onClick={() => this.saveCode()}>
+
+          <div className="editor-save-code" onClick={() => this.saveCode()} style={this.state.push ? { color: 'white' } : { color: 'black' }}>
+            <button>Download Code</button>
             <button>SAVE CODE</button>
           </div>
           <div className="code-editor html-code" style={this.checkLang("HTML") ? null : { display: 'none' }} >
-            <div className="editor-header">HTML</div>
+            <div className="editor-header" style={this.state.push ? { color: 'white' } : { color: 'black' }}>HTML</div>
             <CodeMirror
               className="CodeMirror"
               value={html}
@@ -190,7 +213,7 @@ class Editor extends Component {
             />
           </div>
           <div className="code-editor css-code" style={this.checkLang("CSS") ? null : { display: 'none' }}>
-            <div className="editor-header">CSS</div>
+            <div className="editor-header" style={this.state.push ? { color: 'white' } : { color: 'black' }} >CSS</div>
             <CodeMirror
               value={css}
               options={{
@@ -203,7 +226,7 @@ class Editor extends Component {
             />
           </div>
           <div className="code-editor js-code" style={this.checkLang("JavaScript") ? null : { display: 'none' }}>
-            <div className="editor-header">JavaScript</div>
+            <div className="editor-header" style={this.state.push ? { color: 'white' } : { color: 'black' }}>JavaScript</div>
             <CodeMirror
               value={js}
               options={{
@@ -215,10 +238,10 @@ class Editor extends Component {
               }}
             />
           </div>
-        </section>
-        <section className="result">
+        </div>
+        <div className="editor-result">
           <iframe title="result" className="iframe" ref="iframe" />
-        </section>
+        </div>
       </div>
     );
   }

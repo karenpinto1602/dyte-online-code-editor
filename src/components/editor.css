@@ -1,28 +1,58 @@
-html {
-    box-sizing: border-box;
-  }
+.editor-body{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    min-height: 700px;
+}
   
-  *, *::before, *::after {
-    box-sizing: inherit;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .playground {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 600px;
-    background-color: #1E1E2C;
-  }
-  
-  .code-editor {
+.editor-code {
+    width: 100%;
+    /* background-color:aliceblue; */
+ }
+
+.editor-file-explorer{
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    margin: 4% auto;
+    font-size: 16px;
+    font-weight: 600;
+}
+.editor-file-explorer label{
+    padding-right: 5px;
+    font-weight: bold;
+}
+.editor-file-explorer select{
+    border-radius: 3px;
+    width: 100px;
+    padding: 1.5% 0;
+    padding-inline-start: 2%;
+    float: right;
+}
+.settings-symbol{
+    display: inline;
+    float: right ;
+    font-size: 125%;
+}
+
+
+.editor-save-code{
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    margin: auto;
+}
+
+
+.code-editor {
     height: 90%;
     overflow: hidden;
     position: relative;
-  }
-  
+}
+
+
+
+
+
   .editor-header {
     height: fit-content;
     content: attr(title);
@@ -31,6 +61,7 @@ html {
     padding: 20px;
     font-size: 18px;
     color: #fafafa;
+    font-weight: bold;
   }
   
   .react-codemirror2 {
@@ -54,5 +85,28 @@ html {
   .iframe {
     width: 100%;
     height: 100%;
+  }
+
+  @media screen and (max-width: 800px) {
+    .editor-body{
+        grid: none;
+    }
+    .editor-result{
+       margin-top: 9%;
+    }
+      
+  }
+
+  @media screen and (max-width: 375px) {
+    .editor-file-explorer{
+        flex-direction: column;
+    }
+    .editor-file-explorer-toggle{
+        padding-top: 2%;
+    } 
+    .editor-result{
+        margin-top: 20%;
+     }   
+      
   }
   
