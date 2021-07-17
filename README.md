@@ -1,13 +1,15 @@
-Hosted on Heroku
+### Hosted on Heroku
 
-    https://kp-code-editor.herokuapp.com/
+    https://kp-code-editor.herokuapp.com
+
+
 
 
 To Run the Project locally
 
-### git clone https://github.com/karenpinto1602/dyte-react-kp.git
-### cd dyte-react-kp
-### git checkout main
+ git clone https://github.com/karenpinto1602/dyte-react-kp.git
+ cd dyte-react-kp
+ git checkout main
 
 In the project directory, install node modules
 
@@ -24,12 +26,13 @@ The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
 
-Libraries/Packages Used
+
+### Libraries/Packages Used
 
 1. Pusher
 2. Codemirror2
 
-Additional Features
+### Additional Features
 
 1. Toggle button to swtich between dark and bright mode
 2. Download Code with Extension .html
