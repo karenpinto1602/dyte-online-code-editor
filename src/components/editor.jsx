@@ -91,7 +91,7 @@ class Editor extends Component {
       .catch(console.error);
   };
 
-  /* Pastebin start Developer */
+  /* Pastebin start Developer - Does not work */
   saveCode() {
     console.log("Save funct called");
     var request = new XMLHttpRequest();
