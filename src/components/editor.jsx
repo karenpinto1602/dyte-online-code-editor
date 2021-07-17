@@ -1,19 +1,21 @@
+/* Libraries and Packages*/
 import React, { Component } from "react";
 import { Controlled as CodeMirror } from "react-codemirror2";
 import Pusher from "pusher-js";
 import pushid from "pushid";
 import Toggle from 'react-toggle';
 import 'react-toggle/style.css';
-import { Brightness5, NightsStay } from '@material-ui/icons';
-/* import axios from "axios"; */
-/* import express from "express";
-import cors from "cors"; */
 
+/* Icons from Material-ui */
+import { Brightness5, NightsStay } from '@material-ui/icons';
+
+/* Stylesheet */
 import "./editor.css";
+
+/* External stylying */
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material.css";
 import "codemirror/theme/3024-day.css";
-
 import "codemirror/mode/htmlmixed/htmlmixed";
 import "codemirror/mode/css/css";
 import "codemirror/mode/javascript/javascript";
@@ -34,7 +36,10 @@ class Editor extends Component {
     this.handleLang = this.handleLang.bind(this);
     this.checkLang = this.checkLang.bind(this);
     this.saveCode = this.saveCode.bind(this);
+    this.downloadCode = this.downloadCode.bind(this);
 
+    /* Pusher helps maintain Real-time communication */
+    /* Below credentials are mine - Karen Pinto */
     this.pusher = new Pusher("ee9caf5c6e760f9f1595", {
       cluster: "ap2",
       forceTLS: true
@@ -42,8 +47,7 @@ class Editor extends Component {
     this.channel = this.pusher.subscribe("editor");
   }
 
-
-
+  /* Selecting and Checking the Language [html,css,javascript] */
   handleLang(event) {
     this.setState({
       lang: event.target.value
@@ -59,7 +63,7 @@ class Editor extends Component {
   }
 
   componentDidUpdate() {
-    this.runCode();
+    this.liveCode();
   }
 
   componentDidMount() {
@@ -78,14 +82,6 @@ class Editor extends Component {
       });
     });
   }
-
-  syncUpdates = () => {
-    /* const data = { ...this.state }; */
-
-    /* axios
-      .post("http://localhost:5000", data)
-      .catch(console.error); */
-  };
 
   /* Pastebin start Developer */
   saveCode() {
@@ -124,18 +120,16 @@ class Editor extends Component {
   }
   /* Pastebin End Developer */
 
-  runCode = () => {
+  /* Live Code Updated here */
+  liveCode = () => {
     const { html, css, js } = this.state;
-
-    const iframe = this.refs.iframe;
-    const document = iframe.contentDocument;
-    const documentContents = `
+    const ifr = this.refs.ifr;
+    const liveDocument = ifr.contentDocument;
+    const documentCodeHTML = `
       <!DOCTYPE html>
       <html lang="en">
       <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Document</title>
         <style>
           ${css}
@@ -143,33 +137,66 @@ class Editor extends Component {
       </head>
       <body>
         ${html}
-
         <script type="text/javascript">
           ${js}
         </script>
       </body>
       </html>
     `;
-
-    document.open();
-    document.write(documentContents);
-    document.close();
+    liveDocument.open();
+    liveDocument.write(documentCodeHTML);
+    liveDocument.close();
   };
 
+  /* Download code with extenxion .html */
+  downloadCode() {
+    const { html, js, css } = this.state;
+    var text = `
+    <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <title>Dyte Placements</title>
+        <style>
+          ${css}
+        </style>
+      </head>
+      <body>
+        ${html}
+        <script type="text/javascript">
+          ${js}
+        </script>
+      </body>
+      </html>
+    `;
+    var filename = "kp_dyte.html";
+    this.downloadHTML(filename, text);
+  }
+
+  downloadHTML = (file, text) => {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8, '
+      + encodeURIComponent(text));
+    element.setAttribute('download', file);
+
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  }
+
+  /********* Website *********/
   render() {
     const { html, js, css } = this.state;
-    const codeMirrorOptions = {
-      theme: this.state.push ? "material" : "3024-day",
-      lineNumbers: true,
-      scrollbarStyle: null,
+    const styleSetCodeMirror = {
       lineWrapping: true,
-
+      lineNumbers: true,
+      border: '1px solid black',
+      theme: this.state.push ? "material" : "3024-day"
     };
 
     return (
       <div className="editor-body">
         <div className="editor-code" style={this.state.push ? { backgroundColor: '#1E1E2C' } : { backgroundColor: 'aliceblue' }}>
-
           <div className="editor-file-explorer" style={this.state.push ? { color: 'white' } : { color: 'black' }}>
             <div>
               <label>File Explorer: </label>
@@ -180,7 +207,6 @@ class Editor extends Component {
                 <option value="CSS">CSS</option>
                 <option value="JavaScript">JavaScript</option>
               </select>
-
             </div>
             <div className="editor-file-explorer-toggle">
               <label> Theme
@@ -195,52 +221,57 @@ class Editor extends Component {
           </div>
 
           <div className="editor-save-code" onClick={() => this.saveCode()} style={this.state.push ? { color: 'white' } : { color: 'black' }}>
-            <button>Download Code</button>
-            <button>SAVE CODE</button>
+            <button onClick={() => this.downloadCode()}>Download Code</button>
+            <button>Save Code</button>
           </div>
-          <div className="code-editor html-code" style={this.checkLang("HTML") ? null : { display: 'none' }} >
+
+          <div style={this.checkLang("HTML") ? null : { display: 'none' }} >
             <div className="editor-header" style={this.state.push ? { color: 'white' } : { color: 'black' }}>HTML</div>
             <CodeMirror
-              className="CodeMirror"
+              className="editor-CodeMirror"
               value={html}
               options={{
                 mode: "htmlmixed",
-                ...codeMirrorOptions
+                ...styleSetCodeMirror
               }}
               onBeforeChange={(editor, data, html) => {
-                this.setState({ html }, () => this.syncUpdates());
+                this.setState({ html });
               }}
             />
           </div>
-          <div className="code-editor css-code" style={this.checkLang("CSS") ? null : { display: 'none' }}>
+
+          <div style={this.checkLang("CSS") ? null : { display: 'none' }}>
             <div className="editor-header" style={this.state.push ? { color: 'white' } : { color: 'black' }} >CSS</div>
             <CodeMirror
+              className="editor-CodeMirror"
               value={css}
               options={{
                 mode: "css",
-                ...codeMirrorOptions
+                ...styleSetCodeMirror
               }}
               onBeforeChange={(editor, data, css) => {
-                this.setState({ css }, () => this.syncUpdates());
+                this.setState({ css });
               }}
             />
           </div>
-          <div className="code-editor js-code" style={this.checkLang("JavaScript") ? null : { display: 'none' }}>
+
+          <div style={this.checkLang("JavaScript") ? null : { display: 'none' }}>
             <div className="editor-header" style={this.state.push ? { color: 'white' } : { color: 'black' }}>JavaScript</div>
             <CodeMirror
+              className="editor-CodeMirror"
               value={js}
               options={{
                 mode: "javascript",
-                ...codeMirrorOptions
+                ...styleSetCodeMirror
               }}
               onBeforeChange={(editor, data, js) => {
-                this.setState({ js }, () => this.syncUpdates());
+                this.setState({ js });
               }}
             />
           </div>
         </div>
         <div className="editor-result">
-          <iframe title="result" className="iframe" ref="iframe" />
+          <iframe title="liveResult" className="result-iframe" ref="ifr" />
         </div>
       </div>
     );
